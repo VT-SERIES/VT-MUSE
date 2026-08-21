@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="VT-MUSE: Multimodal Unified Learning and Sequential Perception Modeling for Visuotactile Manipulation.">
+  <meta name="keywords" content="visuotactile manipulation, robot learning, multimodal learning, tactile sensing, representation learning">
+  <title>VT-MUSE</title>
+
+  <link rel="icon" type="image/jpeg" href="static/images/muse.jpg">
+  <link rel="apple-touch-icon" href="static/images/muse.jpg">
+
+  <link rel="preload" href="static/css/fontawesome.all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript>
+    <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  </noscript>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Cinzel:wght@700;900&display=swap" rel="stylesheet">
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      color: #222;
+      background: #fff;
+    }
+
+    a { color: #1a56c4; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ── Page wrapper ── */
+    .page { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+
+    /* ── Header ── */
+    header {
+      padding: 56px 0 40px;
+      text-align: center;
+      border-bottom: 1px solid #e5e5e5;
+    }
+
+    /* Logo + VT-MUSE row */
+    .brand-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+    .paper-logo { height: 72px; width: auto; }
+
+    .brand-name {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 3.4rem;
+      font-weight: 900;
+      line-height: 1;
+      background: linear-gradient(135deg, #b8860b 0%, #d4a017 30%, #f5c842 55%, #c8960c 80%, #8b6914 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: 0.08em;
+      text-shadow: none;
+      filter: drop-shadow(0 1px 2px rgba(180,130,0,0.15));
+    }
+
+    /* Subtitle */
+    .paper-subtitle {
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: #444;
+      line-height: 1.45;
+      margin-bottom: 20px;
+    }
+
+    .authors {
+      font-size: 0.95rem;
+      color: #777;
+      margin-bottom: 24px;
+    }
+
+    /* link buttons */
+    .links { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 6px 16px;
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: #222;
+      background: #fff;
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .btn:hover { border-color: #888; background: #f5f5f5; text-decoration: none; }
+    .btn-disabled {
+      cursor: default;
+      color: #aaa;
+      border-color: #e5e5e5;
+      background: #fafafa;
+    }
+    .soon { font-size: 0.72rem; color: #bbb; margin-left: 1px; }
+
+    /* ── Sections ── */
+    section { padding: 44px 0; border-bottom: 1px solid #e5e5e5; }
+    section:last-of-type { border-bottom: none; }
+
+    h2 {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #888;
+      margin-bottom: 18px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    h3 {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #555;
+      margin: 28px 0 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    p { margin-bottom: 12px; color: #333; font-size: 0.97rem; }
+    p:last-child { margin-bottom: 0; }
+
+    /* ── Teaser video ── */
+    .teaser-video-wrap {
+      width: 100%;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+    .teaser-video-wrap video,
+    .teaser-video-wrap iframe {
+      width: 100%;
+      border-radius: 6px;
+      display: block;
+    }
+    .teaser-ph {
+      aspect-ratio: 16/9;
+      min-height: unset;
+      font-size: 0.9rem;
+      gap: 10px;
+      border-radius: 6px;
+    }
+    .teaser-ph i { font-size: 2.4rem; }
+
+    /* ── Figure placeholder ── */
+    .fig-placeholder {
+      border: 1px dashed #ccc;
+      border-radius: 4px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 280px;
+      color: #bbb;
+      gap: 8px;
+      font-size: 0.85rem;
+    }
+    .fig-placeholder i { font-size: 1.8rem; }
+
+    /* ── Tables ── */
+    .tables-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px 40px;
+    }
+    @media (max-width: 640px) { .tables-grid { grid-template-columns: 1fr; } }
+
+    .tbl-block { min-width: 0; }
+    .tbl-caption {
+      font-size: 0.78rem;
+      color: #888;
+      margin-bottom: 8px;
+      line-height: 1.5;
+    }
+    .tbl-caption strong { color: #444; }
+    .tbl-wrap { overflow-x: auto; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.8rem;
+    }
+    th {
+      border-top: 1.5px solid #333;
+      border-bottom: 1px solid #333;
+      padding: 5px 8px;
+      text-align: center;
+      font-weight: 600;
+      white-space: nowrap;
+      background: #fff;
+    }
+    td {
+      padding: 4px 8px;
+      text-align: center;
+      border-bottom: 1px solid #f0f0f0;
+      white-space: nowrap;
+    }
+    tr.ours td { font-weight: 700; background: #fafafa; }
+    tr:last-child td { border-bottom: 1.5px solid #333; }
+    .best { color: #c00; }
+
+    /* Table III full width */
+    .tbl-block.full { grid-column: 1 / -1; }
+
+    /* ── Video grid ── */
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-top: 10px;
+    }
+    @media (max-width: 600px) { .video-grid { grid-template-columns: repeat(2, 1fr); } }
+
+    .video-item { text-align: center; }
+    .video-ph {
+      background: #f5f5f5;
+      border: 1px solid #e5e5e5;
+      border-radius: 4px;
+      aspect-ratio: 16/9;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #ccc;
+      font-size: 0.72rem;
+      gap: 5px;
+    }
+    .video-ph i { font-size: 1.3rem; }
+    .video-lbl { font-size: 0.75rem; color: #777; margin-top: 5px; }
+
+    /* ── Footer ── */
+    footer {
+      padding: 28px 0;
+      text-align: center;
+      font-size: 0.8rem;
+      color: #aaa;
+      border-top: 1px solid #e5e5e5;
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+<!-- ── HEADER ── -->
+<header>
+  <!-- Logo + VT-MUSE brand name -->
+  <div class="brand-row">
+    <img src="static/images/muse.jpg" alt="VT-MUSE Logo" class="paper-logo">
+    <span class="brand-name">VT-MUSE</span>
+  </div>
+
+  <!-- Rest of the title -->
+  <p class="paper-subtitle">
+    Multimodal Unified Learning and Sequential Perception<br>
+    Modeling for Visuotactile Manipulation
+  </p>
+
+  <p class="authors">Anonymous Authors</p>
+
+  <div class="links">
+    <a class="btn" href="static/pdfs/VT_MUSE_WorkshopVersion.pdf" target="_blank">
+      <i class="fas fa-file-pdf"></i> Paper <span style="font-size:0.72rem;color:#888;margin-left:2px;">(Workshop)</span>
+    </a>
+    <span class="btn btn-disabled">
+      <i class="fas fa-file-pdf"></i> Paper <span style="font-size:0.72rem;color:#bbb;margin-left:2px;">(Main)</span><span class="soon">coming soon</span>
+    </span>
+    <span class="btn btn-disabled">
+      <i class="ai ai-arxiv"></i> arXiv <span class="soon">coming soon</span>
+    </span>
+    <a class="btn" href="https://github.com/VT-SERIES/VT-MUSE" target="_blank">
+      <i class="fab fa-github"></i> Code
+    </a>
+  </div>
+</header>
+
+<!-- ── TEASER VIDEO ── -->
+<section style="padding: 36px 0;">
+  <div class="teaser-video-wrap">
+    <video src="static/videos/teaser.mp4" controls playsinline style="width:100%;border-radius:6px;"></video>
+  </div>
+</section>
+
+<!-- ── ABSTRACT ── -->
+<section>
+  <h2>Abstract</h2>
+  <p>
+    We propose <strong>VT-MUSE</strong>, a temporal visuotactile representation framework that jointly models visual and tactile dynamics through a unified cVAE-based encoder-decoder. The encoder processes masked visual observations alongside full tactile history via a temporal-aware layer, while multiple auxiliary heads reconstruct current observations, tactile depth flow, and marker flow. A two-stage training scheme first aligns the two modalities temporally, then optimizes the full model under multi-task supervision. Experiments on both simulation and real-world benchmarks show that VT-MUSE achieves state-of-the-art performance on contact-rich manipulation tasks with low data and compute cost.
+  </p>
+</section>
+
+<!-- ── METHOD ── -->
+<section>
+  <h2>Method Overview</h2>
+  <img src="static/images/pipeline.png" alt="VT-MUSE pipeline" style="width:100%; border-radius:6px;">
+</section>
+
+<!-- ── RESULTS ── -->
+<section>
+  <h2>Experimental Results</h2>
+
+  <div class="tables-grid">
+
+    <!-- Table I -->
+    <div class="tbl-block">
+      <p class="tbl-caption"><strong>Table I.</strong> Success rate (SR, %) on UniVTAC simulation benchmark. LB = Lift Bottle, PoK = Pull-out Key, IHo = Insert Hole, IHD = Insert HDMI. * from official benchmark.</p>
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th style="text-align:left">Method</th>
+              <th>LB</th><th>PoK</th><th>IHo</th><th>IHD</th><th>Avg.</th><th>w/o IHD</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="text-align:left">ACT (Pure Vision)</td>
+              <td>42</td><td>28</td><td>19</td><td>15</td><td>26</td><td>30</td>
+            </tr>
+            <tr>
+              <td style="text-align:left">ACT+UniVTAC</td>
+              <td>71</td><td>45</td><td>23</td><td>17</td><td>39</td><td>46.33</td>
+            </tr>
+            <tr>
+              <td style="text-align:left">ViTaL *</td>
+              <td>72</td><td>47</td><td>25</td><td>6</td><td>37.5</td><td>48</td>
+            </tr>
+            <tr>
+              <td style="text-align:left">FTP-π₀.₅ *</td>
+              <td>77</td><td>30</td><td>47</td><td>—</td><td>—</td><td>51.33</td>
+            </tr>
+            <tr class="ours">
+              <td style="text-align:left">VT-MUSE (Ours)</td>
+              <td class="best">84</td><td>38</td><td class="best">68</td><td class="best">31</td>
+              <td class="best">55.25</td><td class="best">62.33</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Table II -->
+    <div class="tbl-block">
+      <p class="tbl-caption"><strong>Table II.</strong> Success rate on real-world tasks (Flexiv Rizon 4s + XenseGripper, 20 trials each). IT = Insert Tube, WB = Wipe Board, PD = Pull out Drawer, PT = Press Toast.</p>
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th style="text-align:left">Method</th>
+              <th>IT</th><th>WB</th><th>PD</th><th>PT</th><th>Avg.</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="text-align:left">ACT (Pure Vision)</td>
+              <td>1/20</td><td>3/20</td><td>13/20</td><td>4/20</td><td>26.25%</td>
+            </tr>
+            <tr>
+              <td style="text-align:left">ACT (Vision + Tactile)</td>
+              <td>1/20</td><td>5/20</td><td>15/20</td><td>4/20</td><td>31.25%</td>
+            </tr>
+            <tr class="ours">
+              <td style="text-align:left">VT-MUSE (Ours)</td>
+              <td class="best">19/20</td><td class="best">19/20</td><td class="best">20/20</td><td class="best">18/20</td><td class="best">95%</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── DEMO VIDEOS ── -->
+<section>
+  <h2>Demo Videos</h2>
+
+  <h3>Simulation (UniVTAC)</h3>
+  <div class="video-grid">
+    <div class="video-item">
+      <video class="autoplay-video" src="static/videos/lift_bottle.mp4" muted loop playsinline style="width:100%;border-radius:4px;"></video>
+      <p class="video-lbl">Lift Bottle</p>
+    </div>
+    <div class="video-item">
+      <video class="autoplay-video" src="static/videos/pull_out_key.mp4" muted loop playsinline style="width:100%;border-radius:4px;"></video>
+      <p class="video-lbl">Pull-out Key</p>
+    </div>
+    <div class="video-item">
+      <video class="autoplay-video" src="static/videos/insert_hole.mp4" muted loop playsinline style="width:100%;border-radius:4px;"></video>
+      <p class="video-lbl">Insert Hole</p>
+    </div>
+    <div class="video-item">
+      <video class="autoplay-video" src="static/videos/insert_hdmi.mp4" muted loop playsinline style="width:100%;border-radius:4px;"></video>
+      <p class="video-lbl">Insert HDMI</p>
+    </div>
+  </div>
+
+  <h3>Real World (Flexiv Rizon 4s)</h3>
+  <div class="video-grid">
+    <div class="video-item">
+      <video class="autoplay-video" src="static/videos/Insert_tube.mp4" muted loop playsinline style="width:100%;border-radius:4px;"></video>
+      <p class="video-lbl">Insert Tube</p>
+    </div>
+    <div class="video-item">
+      <video class="autoplay-video" src="static/videos/wipe_board.mp4" muted loop playsinline style="width:100%;border-radius:4px;"></video>
+      <p class="video-lbl">Wipe Board</p>
+    </div>
+    <div class="video-item">
+      <video class="autoplay-video" src="static/videos/Pull_out_Drawer.mp4" muted loop playsinline style="width:100%;border-radius:4px;"></video>
+      <p class="video-lbl">Pull out Drawer</p>
+    </div>
+    <div class="video-item">
+      <video class="autoplay-video" src="static/videos/press_toast.mp4" muted loop playsinline style="width:100%;border-radius:4px;"></video>
+      <p class="video-lbl">Press Toast</p>
+    </div>
+  </div>
+</section>
+
+<!-- BibTeX hidden during anonymous review -->
+
+</div><!-- .page -->
+
+<footer>
+  <div class="page">
+    Built with the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a>.
+    Licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank">CC BY-SA 4.0</a>.
+  </div>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      entry.isIntersecting ? entry.target.play() : entry.target.pause();
+    });
+  }, { threshold: 0.4 });
+
+  document.querySelectorAll('.autoplay-video').forEach(v => observer.observe(v));
+</script>
+
+</body>
+</html>
