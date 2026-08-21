@@ -19,3 +19,4 @@ outputs/
 *.ckpt
 *.hdf5
 *.h5
+.claude/
